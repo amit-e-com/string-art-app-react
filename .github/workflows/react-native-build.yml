@@ -1,0 +1,39 @@
+name: Build React Native App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build debug APK
+        run: npx react-native run-android --variant=release
+
+      - name: Locate APK
+        id: locate-apk
+        run: |
+          find ${{ github.workspace }}/android/app/build/outputs/apk/ -name "*.apk" -exec echo {} \; > apk_path.txt
+          cat apk_path.txt
+          echo "APK_PATH=$(cat apk_path.txt)" >> $GITHUB_ENV
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: string_art_app_apk
+          path: ${{ env.APK_PATH }}
+          retention-days: 5
