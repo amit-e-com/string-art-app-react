@@ -1,0 +1,22 @@
+{
+  "name": "StringArtApp",
+  "displayName": "String Art Generator",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "updates": {
+    "enabled": false
+  },
+  "assetBundlePatterns": [
+    "**/*"
+  ],
+  "platforms": ["android", "ios"],
+  "rncli": {
+    "project": {
+      "android": {
+        "sourceDir": "android"
+      },
+      "ios": {
+        "project": "ios/StringArtApp.xcodeproj"
+      }
+    }
+  }
